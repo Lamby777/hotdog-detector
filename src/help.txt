@@ -1,0 +1,6 @@
+Help message
+
+cmd sub1
+-	Do stuff
+cmd sub2 <path>
+-	Do more stuff
