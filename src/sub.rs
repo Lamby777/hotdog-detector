@@ -2,6 +2,10 @@
 * Subcommands
 */
 
-pub fn print() {
-	println!("sus");
+pub fn train() {
+	//
+}
+
+pub fn feed_img() {
+	//
 }

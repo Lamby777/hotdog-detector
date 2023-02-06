@@ -8,7 +8,7 @@ use text_io::read;
 
 // locals
 mod consts;
-use consts::{LINE_SEPARATOR};
+use consts::*;
 
 mod classes;
 use classes::*;
@@ -19,14 +19,23 @@ pub fn main(args: Vec<String>) -> IDFC<()> {
 	if args.len() < 2 { return Ok(show_help()); }
 
 	let cmd = &args[1].to_lowercase();	// give the cmd its own binding
-	let args = &args[2..];				// shadow first vec
+	let args = &args[2..];			// shadow first vec
 
 	let cmd = cmd_replace_aliases(cmd);
 
 	match cmd {
-		"amogus"	=> {
-			assert_argc(args, &[0]);
-			sub::print();
+		"train"	=> {
+			assert_argc(args, &[0, 1]);
+
+			let first_arg = args.get(1);
+			
+			let m_per_gen = if let Some(ct) = first_arg {
+				ct.parse::<u32>()?
+			} else {
+				16
+			};
+
+			sub::train();
 		}
 
 		_	=> show_help()

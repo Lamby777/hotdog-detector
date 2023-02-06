@@ -1,6 +1,8 @@
-Help message
+Hotdog Detector Subcommands:
 
-cmd sub1
--	Do stuff
-cmd sub2 <path>
--	Do more stuff
+hdai train <ct>
+-   Train a model using images in the ./dataset folder, with `ct` models per generation.
+hdai det <image>
+-   Test on an image
+hdai det <folder> all
+-   Test on a folder of images
