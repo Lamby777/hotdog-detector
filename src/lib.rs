@@ -27,15 +27,13 @@ pub fn main(args: Vec<String>) -> IDFC<()> {
 		"train"	=> {
 			assert_argc(args, &[0, 1]);
 
-			let first_arg = args.get(1);
+			// default to 16
+			let m_per_gen = args.get(1).and_then(|v| Some(
+				v.parse::<u32>()
+					.unwrap_or_else(|_| panic!("First argument should be an integer!"))
+			)).unwrap_or(16);
 			
-			let m_per_gen = if let Some(ct) = first_arg {
-				ct.parse::<u32>()?
-			} else {
-				16
-			};
-
-			sub::train();
+			sub::train(m_per_gen);
 		}
 
 		_	=> show_help()

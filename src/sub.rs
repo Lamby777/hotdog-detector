@@ -2,7 +2,7 @@
 * Subcommands
 */
 
-pub fn train() {
+pub fn train(m_per_gen: u32) {
 	//
 }
 
