@@ -6,7 +6,8 @@ use std::fs;
 
 // train command code
 pub fn train(m_per_gen: u32) {
-	let items = fs::read_dir("./dataset");
+	let csv_data = None;
+	let dataset = fs::read_dir("./dataset").expect("Folder `dataset` required for training!");
 }
 
 // test a single image
