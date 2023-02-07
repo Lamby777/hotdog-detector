@@ -1,6 +1,9 @@
 // typedefs, structs, impls, etc.
 // stuff that would take up too much space in main
 
+use std::path::PathBuf;
+use serde::{Serialize, Deserialize};
+
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
 
 pub struct NeuralNet {
@@ -33,4 +36,10 @@ impl NeuralNetNode {
 			0.0, 0.0
 		);
 	}
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DatasetRow {
+	img_path:	PathBuf,
+	is_hotdog:	bool
 }
