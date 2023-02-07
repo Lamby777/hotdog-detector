@@ -6,15 +6,19 @@ use serde::{Serialize, Deserialize};
 
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
 
+#[derive(Serialize, Deserialize)]
 pub struct NeuralNet {
-	hidden_layers:	Vec<NeuralNetLayer>
+	hidden_layers:	Vec<NeuralNetLayer>,
+	generation:		u64,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct NeuralNetLayer {
 	neurons:	Vec<NeuralNetNode>
 }
 
 // the "neurons" of the brain
+#[derive(Serialize, Deserialize)]
 pub struct NeuralNetNode {
 	// (m, b)
 	weight:	(f64, f64),
