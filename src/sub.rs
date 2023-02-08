@@ -18,14 +18,18 @@ pub fn feed_img() {
 	//
 }
 
-fn read_data_csv() -> IDFC<DatasetRow> {
+fn read_data_csv() -> IDFC<Vec<DatasetRow>> {
 	let mut csv_reader = csv::Reader::from_path("./training_data.csv")?;
 
 	let dataset = fs::read_dir("./dataset").expect("Folder `dataset` required for training!");
 
+	// maybe turn this part into an iter method chain and a .collect() later
+	let mut res = Vec::new();
+
 	for record in csv_reader.deserialize() {
 		let record: DatasetRow = record?;
+		res.push(record);
 	}
 	
-	todo!()
+	Ok(res)
 }
