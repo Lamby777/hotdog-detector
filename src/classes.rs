@@ -1,7 +1,7 @@
 // typedefs, structs, impls, etc.
 // stuff that would take up too much space in main
 
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
 use serde::{Serialize, Deserialize};
 
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
@@ -10,6 +10,19 @@ pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
 pub struct NeuralNet {
 	hidden_layers:	Vec<NeuralNetLayer>,
 	generation:		u64,
+}
+
+impl NeuralNet {
+	pub fn new() -> Self {
+		Self {
+			hidden_layers:	todo!(),
+			generation:		todo!(),
+		}
+	}
+
+	pub fn load_path<P: AsRef<Path>>(path: P) -> Option<Self> {
+		todo!()
+	}
 }
 
 #[derive(Serialize, Deserialize)]
