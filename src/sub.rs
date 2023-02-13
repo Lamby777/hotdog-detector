@@ -4,13 +4,14 @@
 
 use std::fs;
 
-use crate::{IDFC, classes::{DatasetRow, NeuralNet}};
+use crate::{IDFC, classes::{DatasetRow, NeuralNet}, INTERMEDIATE_LAYERS};
 
 // train command code
 pub fn train(m_per_gen: u32) -> IDFC<()> {
 	let training_data = read_data_csv();
 
-	let model = NeuralNet::load_path("./model.json").unwrap_or(NeuralNet::new());
+	let model = NeuralNet::load_path("./model.json")
+					.unwrap_or(NeuralNet::new(INTERMEDIATE_LAYERS));
 
 	todo!()
 }

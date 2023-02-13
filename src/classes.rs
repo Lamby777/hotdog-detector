@@ -1,8 +1,9 @@
 // typedefs, structs, impls, etc.
 // stuff that would take up too much space in main
 
-use std::path::{PathBuf, Path};
+use std::{fs, path::{PathBuf, Path}};
 use serde::{Serialize, Deserialize};
+use crate::INTERMEDIATE_LAYERS;
 
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -13,25 +14,32 @@ pub struct NeuralNet {
 }
 
 impl NeuralNet {
-	pub fn new() -> Self {
+	pub fn new(hidden_layers: usize) -> Self {
 		Self {
-			hidden_layers:	todo!(),
+			hidden_layers:	vec![NeuralNetLayer::new(); INTERMEDIATE_LAYERS],
 			generation:		todo!(),
 		}
 	}
 
 	pub fn load_path<P: AsRef<Path>>(path: P) -> Option<Self> {
-		todo!()
+		let data = fs::read_to_string(path).ok()?;
+		serde_json::from_str(&data).ok()?
 	}
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct NeuralNetLayer {
 	neurons:	Vec<NeuralNetNode>
 }
 
+impl NeuralNetLayer {
+	fn new() -> Self {
+		todo!()
+	}
+}
+
 // the "neurons" of the brain
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct NeuralNetNode {
 	// (m, b)
 	weight:	(f64, f64),
