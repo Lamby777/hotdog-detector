@@ -13,12 +13,7 @@ pub fn train(m_per_gen: u32) -> IDFC<()> {
 	let model = NeuralNet::load_path("./model.json")
 					.unwrap_or(NeuralNet::new(INTERMEDIATE_LAYERS));
 
-	todo!()
-}
-
-// test a single image
-pub fn feed_img() {
-	//
+	Ok(())
 }
 
 fn read_data_csv() -> IDFC<Vec<DatasetRow>> {

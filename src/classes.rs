@@ -3,12 +3,14 @@
 
 use std::{fs, path::{PathBuf, Path}};
 use serde::{Serialize, Deserialize};
-use crate::{INTERMEDIATE_LAYERS, ILAYER_NODES};
+use crate::{INTERMEDIATE_LAYERS, INPUT_NODES, ILAYER_NODES};
 
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
+pub type WeightPair = (f64, f64); // (m, b) where y = mx + b
 
 #[derive(Serialize, Deserialize)]
 pub struct NeuralNet {
+	input_layer:	NeuralNetLayer,
 	hidden_layers:	Vec<NeuralNetLayer>,
 	generation:		u64,
 }
@@ -16,9 +18,20 @@ pub struct NeuralNet {
 impl NeuralNet {
 	pub fn new(hidden_layers: usize) -> Self {
 		Self {
-			hidden_layers:	vec![NeuralNetLayer::new(); INTERMEDIATE_LAYERS],
+			input_layer:	NeuralNetLayer::new(INPUT_NODES),
+			hidden_layers:	vec![NeuralNetLayer::new(ILAYER_NODES); INTERMEDIATE_LAYERS],
 			generation:		0,
 		}
+	}
+
+	/*
+	* Take data for the input layer, and run it through
+	* the network to get the resulting output layer data
+	*
+	* evaluate(Input Data) -> Output Data
+	*/
+	pub fn evaluate(input: NeuralNetLayer) -> NeuralNetLayer {
+		todo!()
 	}
 
 	pub fn load_path<P: AsRef<Path>>(path: P) -> Option<Self> {
@@ -27,15 +40,21 @@ impl NeuralNet {
 	}
 }
 
+pub enum NeuralNetSection {
+	Input,
+	Intermediate,
+	Output,
+}
+
 #[derive(Serialize, Deserialize, Clone)]
 pub struct NeuralNetLayer {
 	neurons:	Vec<NeuralNetNode>
 }
 
 impl NeuralNetLayer {
-	fn new() -> Self {
+	fn new(node_ct: usize) -> Self {
 		Self {
-			neurons: vec![NeuralNetNode::new(); ILAYER_NODES],
+			neurons: vec![NeuralNetNode::new(); node_ct],
 		}
 	}
 }
@@ -43,8 +62,7 @@ impl NeuralNetLayer {
 // the "neurons" of the brain
 #[derive(Serialize, Deserialize, Clone)]
 pub struct NeuralNetNode {
-	// (m, b)
-	weight:	(f64, f64),
+	weight:	WeightPair,
 }
 
 impl NeuralNetNode {
@@ -58,7 +76,7 @@ impl NeuralNetNode {
 		// calculate signal to send forward
 	}
 
-	pub fn apply_offset(&mut self, offset: (f64, f64)) {
+	pub fn apply_offset(&mut self, offset: WeightPair) {
 		self.weight = (
 			self.weight.0 + offset.0,
 			self.weight.1 + offset.1,

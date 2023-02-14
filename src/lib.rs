@@ -2,10 +2,6 @@
 * Put information about the project here
 */
 
-// common stuff to import
-use indoc::indoc;
-use text_io::read;
-
 // locals
 mod consts;
 use consts::*;
