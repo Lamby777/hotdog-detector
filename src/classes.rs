@@ -45,14 +45,12 @@ impl NeuralNetLayer {
 pub struct NeuralNetNode {
 	// (m, b)
 	weight:	(f64, f64),
-	offset: (f64, f64),
 }
 
 impl NeuralNetNode {
 	fn new() -> Self {
 		Self {
 			weight: (1.0, 1.0),
-			offset: (0.0, 0.0),
 		}
 	}
 
@@ -60,15 +58,11 @@ impl NeuralNetNode {
 		// calculate signal to send forward
 	}
 
-	pub fn apply_offset(&mut self) {
+	pub fn apply_offset(&mut self, offset: (f64, f64)) {
 		self.weight = (
-			self.weight.0 + self.offset.0,
-			self.weight.1 + self.offset.1,
-		);
-
-		self.offset = (
-			0.0, 0.0
-		);
+			self.weight.0 + offset.0,
+			self.weight.1 + offset.1,
+		)
 	}
 }
 
