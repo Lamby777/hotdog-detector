@@ -3,7 +3,7 @@
 
 use std::{fs, path::{PathBuf, Path}};
 use serde::{Serialize, Deserialize};
-use crate::INTERMEDIATE_LAYERS;
+use crate::{INTERMEDIATE_LAYERS, ILAYER_NODES};
 
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -17,7 +17,7 @@ impl NeuralNet {
 	pub fn new(hidden_layers: usize) -> Self {
 		Self {
 			hidden_layers:	vec![NeuralNetLayer::new(); INTERMEDIATE_LAYERS],
-			generation:		todo!(),
+			generation:		0,
 		}
 	}
 
@@ -34,7 +34,9 @@ pub struct NeuralNetLayer {
 
 impl NeuralNetLayer {
 	fn new() -> Self {
-		todo!()
+		Self {
+			neurons: vec![NeuralNetNode::new(); ILAYER_NODES],
+		}
 	}
 }
 
@@ -47,6 +49,13 @@ pub struct NeuralNetNode {
 }
 
 impl NeuralNetNode {
+	fn new() -> Self {
+		Self {
+			weight: (1.0, 1.0),
+			offset: (0.0, 0.0),
+		}
+	}
+
 	pub fn result(&self) {
 		// calculate signal to send forward
 	}
