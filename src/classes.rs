@@ -7,6 +7,7 @@ use crate::{INTERMEDIATE_LAYERS, INPUT_NODES, ILAYER_NODES};
 
 pub type IDFC<T> = Result<T, Box<dyn std::error::Error>>;
 pub type WeightPair = (f64, f64); // (m, b) where y = mx + b
+pub type NodeBoxed = u16; // Value that neurons keep track of
 
 #[derive(Serialize, Deserialize)]
 pub struct NeuralNet {
@@ -30,7 +31,7 @@ impl NeuralNet {
 	*
 	* evaluate(Input Data) -> Output Data
 	*/
-	pub fn evaluate(input: NeuralNetLayer) -> NeuralNetLayer {
+	pub fn evaluate(input: Vec<f64>) -> NeuralNetLayer {
 		todo!()
 	}
 
@@ -40,19 +41,13 @@ impl NeuralNet {
 	}
 }
 
-pub enum NeuralNetSection {
-	Input,
-	Intermediate,
-	Output,
-}
-
 #[derive(Serialize, Deserialize, Clone)]
 pub struct NeuralNetLayer {
 	neurons:	Vec<NeuralNetNode>
 }
 
 impl NeuralNetLayer {
-	fn new(node_ct: usize) -> Self {
+	pub fn new(node_ct: usize) -> Self {
 		Self {
 			neurons: vec![NeuralNetNode::new(); node_ct],
 		}
@@ -62,18 +57,20 @@ impl NeuralNetLayer {
 // the "neurons" of the brain
 #[derive(Serialize, Deserialize, Clone)]
 pub struct NeuralNetNode {
+	value:	NodeBoxed,
 	weight:	WeightPair,
 }
 
 impl NeuralNetNode {
-	fn new() -> Self {
+	pub fn new() -> Self {
 		Self {
-			weight: (1.0, 1.0),
+			value:	0,
+			weight:	(1.0, 1.0),
 		}
 	}
 
-	pub fn result(&self) {
-		// calculate signal to send forward
+	pub fn fire(&self) {
+		// calculate signals to send forward
 	}
 
 	pub fn apply_offset(&mut self, offset: WeightPair) {

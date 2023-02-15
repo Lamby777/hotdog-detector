@@ -29,7 +29,7 @@ pub fn main(args: Vec<String>) -> IDFC<()> {
 					.unwrap_or_else(|_| panic!("First argument should be an integer!"))
 			)).unwrap_or(16);
 			
-			sub::train(m_per_gen);
+			sub::train(m_per_gen)?;
 		}
 
 		_	=> show_help()
